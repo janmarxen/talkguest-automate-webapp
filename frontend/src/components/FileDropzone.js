@@ -1,25 +1,18 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useLanguage } from '../contexts/LanguageContext';
 
+/**
+ * FileDropzone - A simple file upload component
+ * 
+ * This is a "controlled" component - the parent owns the file state.
+ * This component only handles the upload UI and progress.
+ */
 function FileDropzone({ fileType, label, required, onUpload, currentFile, onDelete, disabled }) {
   const { t } = useLanguage();
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(null);
-  // Local state to immediately show upload success
-  const [localFile, setLocalFile] = useState(null);
-
-  // Sync localFile with currentFile from parent when parent updates
-  useEffect(() => {
-    if (currentFile) {
-      setLocalFile(currentFile);
-      setError(null); // Clear any error when parent confirms file
-    }
-  }, [currentFile]);
-
-  // The file to display - prioritize local state, fall back to parent state
-  const displayFile = localFile || currentFile;
 
   const onDrop = useCallback(async (acceptedFiles) => {
     if (acceptedFiles.length === 0) return;
@@ -28,30 +21,18 @@ function FileDropzone({ fileType, label, required, onUpload, currentFile, onDele
     setUploading(true);
     setError(null);
     setUploadProgress(0);
-    setLocalFile(null);
 
     try {
-      const result = await onUpload(fileType, file, (progress) => {
+      await onUpload(fileType, file, (progress) => {
         setUploadProgress(progress);
       });
-      
-      // Check if result exists and has success flag
-      if (result?.success) {
-        const fileInfo = {
-          filename: result.filename,
-          columns: result.columns,
-          row_count: result.row_count
-        };
-        setLocalFile(fileInfo);
-      } else if (result?.error) {
-        setError(result.error);
-      }
+      // Parent will update currentFile prop on success
+      // Wait a moment for React state to propagate from parent
+      setUploadProgress(100);
+      await new Promise(resolve => setTimeout(resolve, 150));
     } catch (err) {
-      // Only show error if it's a real error, not just missing result
-      const errorMessage = err?.response?.data?.error || err?.message;
-      if (errorMessage) {
-        setError(errorMessage);
-      }
+      console.error('Upload error:', err);
+      setError(err?.message || 'Upload failed');
     } finally {
       setUploading(false);
       setUploadProgress(0);
@@ -70,7 +51,7 @@ function FileDropzone({ fileType, label, required, onUpload, currentFile, onDele
 
   const handleDelete = (e) => {
     e.stopPropagation();
-    setLocalFile(null);
+    setError(null);
     onDelete(fileType);
   };
 
@@ -81,7 +62,7 @@ function FileDropzone({ fileType, label, required, onUpload, currentFile, onDele
           {label}
           {required && <span className="text-red-500 ml-1">*</span>}
         </h3>
-        {displayFile && (
+        {currentFile && (
           <button
             onClick={handleDelete}
             className="text-red-500 hover:text-red-700 text-sm"
@@ -92,16 +73,16 @@ function FileDropzone({ fileType, label, required, onUpload, currentFile, onDele
         )}
       </div>
 
-      {displayFile ? (
+      {currentFile ? (
         <div className="border-2 border-green-200 bg-green-50 rounded-lg p-4">
           <div className="flex items-center">
             <span className="text-green-500 text-2xl mr-3">✓</span>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-gray-900 truncate">
-                {displayFile.filename}
+                {currentFile.filename}
               </p>
               <p className="text-xs text-gray-500">
-                {displayFile.row_count} {t('rows')} • {displayFile.columns?.length} {t('columns')}
+                {currentFile.row_count} {t('rows')} • {currentFile.columns?.length || 0} {t('columns')}
               </p>
             </div>
           </div>

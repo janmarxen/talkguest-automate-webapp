@@ -22,18 +22,45 @@ function UploadTab({
   const { t } = useLanguage();
   
   const handleUpload = async (fileType, file, onProgress) => {
+    console.log(`[UploadTab] Starting upload for ${fileType}:`, file.name);
+    
     try {
       const result = await uploadFile(fileType, file, onProgress);
-      if (result.success) {
-        onUploadComplete(fileType, {
-          filename: result.filename,
-          columns: result.columns,
-          row_count: result.row_count
-        });
+      console.log(`[UploadTab] Raw result:`, result);
+      console.log(`[UploadTab] Type of result:`, typeof result);
+      
+      // Robust parsing - handle string, object, or nested scenarios
+      let data = result;
+      
+      // If it's a string, try to parse it (possibly multiple times if double-stringified)
+      while (typeof data === 'string') {
+        try {
+          data = JSON.parse(data);
+          console.log(`[UploadTab] Parsed to:`, data);
+        } catch (e) {
+          console.error(`[UploadTab] Cannot parse string:`, data.substring(0, 100));
+          break; // Stop if we can't parse
+        }
       }
-      return result;
+      
+      // Now check for success
+      if (data && typeof data === 'object' && (data.success || data.filename)) {
+        console.log(`[UploadTab] Success! Calling onUploadComplete`);
+        onUploadComplete(fileType, {
+          filename: data.filename,
+          columns: data.columns || [],
+          row_count: data.row_count || 0
+        });
+        console.log(`[UploadTab] onUploadComplete called`);
+      } else if (data && typeof data === 'object' && data.error) {
+        console.error(`[UploadTab] Server returned error:`, data.error);
+        throw new Error(data.error);
+      } else {
+        console.error(`[UploadTab] Unexpected response format:`, data);
+        throw new Error('Unexpected response format from server');
+      }
     } catch (err) {
-      // Re-throw so FileDropzone can handle it
+      console.error(`[UploadTab] Upload exception:`, err);
       throw err;
     }
   };

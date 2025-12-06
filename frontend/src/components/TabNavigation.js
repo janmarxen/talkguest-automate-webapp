@@ -1,6 +1,9 @@
 import React from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 function TabNavigation({ tabs, activeTab, onTabChange }) {
+  const { t } = useLanguage();
+
   return (
     <div className="border-b border-gray-200">
       <nav className="-mb-px flex space-x-8">
@@ -22,7 +25,7 @@ function TabNavigation({ tabs, activeTab, onTabChange }) {
             <span className="mr-2">{tab.icon}</span>
             {tab.label}
             {tab.disabled && (
-              <span className="ml-2 text-xs text-gray-400">(Process data first)</span>
+              <span className="ml-2 text-xs text-gray-400">({t('processDataFirst')})</span>
             )}
           </button>
         ))}

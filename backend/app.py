@@ -44,6 +44,14 @@ def create_app(config=None):
     app.register_blueprint(results_bp, url_prefix='/api')
     app.register_blueprint(download_bp, url_prefix='/api')
     
+    # Disable caching for all responses
+    @app.after_request
+    def add_header(response):
+        response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = '-1'
+        return response
+
     return app
 
 

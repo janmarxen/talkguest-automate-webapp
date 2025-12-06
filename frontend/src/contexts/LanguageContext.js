@@ -30,6 +30,7 @@ const translations = {
     processData: 'Process Data',
     processing: 'Processing...',
     uploadRequired: 'Please upload guests and reservations files to proceed',
+    processDataFirst: 'Process data first',
     
     // Results
     resultsSummary: 'Results Summary',
@@ -113,6 +114,7 @@ const translations = {
     processData: 'Processar Dados',
     processing: 'A processar...',
     uploadRequired: 'Por favor carregue os ficheiros de hóspedes e reservas para continuar',
+    processDataFirst: 'Processe os dados primeiro',
     
     // Results
     resultsSummary: 'Resumo dos Resultados',

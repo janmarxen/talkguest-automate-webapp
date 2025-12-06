@@ -8,6 +8,24 @@ const api = axios.create({
   timeout: 60000, // 60 second timeout for large file uploads
 });
 
+// Response interceptor to ensure data is always parsed
+api.interceptors.response.use(
+  (response) => {
+    // If response.data is a string, try to parse it as JSON
+    if (typeof response.data === 'string') {
+      try {
+        response.data = JSON.parse(response.data);
+      } catch (e) {
+        // Keep as string if not valid JSON
+      }
+    }
+    return response;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 // Health check
 export const checkHealth = async () => {
   const response = await api.get('/health');

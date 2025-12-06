@@ -29,13 +29,27 @@ function App() {
         getProcessingStatus().catch(() => ({ status: 'not_started' }))
       ]);
       
+      console.log('Fetched upload status:', uploadRes);
+      console.log('Fetched processing status:', processRes);
+      
+      // Handle case where uploadRes might be a string
+      let parsedUploadRes = uploadRes;
+      if (typeof uploadRes === 'string') {
+        try {
+          parsedUploadRes = JSON.parse(uploadRes);
+        } catch (e) {
+          console.error('Failed to parse upload status:', e);
+          parsedUploadRes = { files: {}, ready_to_process: false };
+        }
+      }
+      
       setUploadStatus({
-        guests: uploadRes.files?.guests,
-        reservations: uploadRes.files?.reservations,
-        invoices: uploadRes.files?.invoices,
-        ready_to_process: uploadRes.ready_to_process
+        guests: parsedUploadRes.files?.guests || null,
+        reservations: parsedUploadRes.files?.reservations || null,
+        invoices: parsedUploadRes.files?.invoices || null,
+        ready_to_process: parsedUploadRes.ready_to_process || false
       });
-      setProcessingStatus(processRes.status);
+      setProcessingStatus(processRes.status || 'not_started');
 
       // Fetch results if processing is completed
       if (processRes.status === 'completed') {
@@ -54,13 +68,16 @@ function App() {
   }, [fetchStatus]);
 
   const handleUploadComplete = (fileType, fileInfo) => {
-    setUploadStatus(prev => ({
-      ...prev,
-      [fileType]: fileInfo,
-      ready_to_process: fileType === 'guests' || fileType === 'reservations' 
-        ? (fileType === 'guests' ? (!!prev.reservations && !!fileInfo) : (!!prev.guests && !!fileInfo))
-        : prev.ready_to_process
-    }));
+    setUploadStatus(prev => {
+      const newStatus = {
+        ...prev,
+        [fileType]: fileInfo
+      };
+      // Recalculate ready_to_process based on new state
+      newStatus.ready_to_process = !!(newStatus.guests && newStatus.reservations);
+      console.log('Upload complete, new status:', newStatus);
+      return newStatus;
+    });
     setProcessingStatus('not_started');
     setResults(null);
     setError(null);
