@@ -1,0 +1,7 @@
+data/
+output/
+*.log
+.git/
+*.md
+tests/
+docker/

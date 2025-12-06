@@ -1,0 +1,38 @@
+version: '3.8'
+
+# Docker Compose configuration for running tests
+# Usage: docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit
+
+services:
+  backend-tests:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: talkguest-backend-tests
+    command: pytest -v --tb=short --cov=. --cov-report=term-missing
+    environment:
+      - FLASK_ENV=testing
+      - TESTING=true
+    volumes:
+      - ./backend:/app
+    networks:
+      - test-network
+
+  frontend-tests:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.test
+    container_name: talkguest-frontend-tests
+    command: npm test -- --watchAll=false --coverage
+    environment:
+      - CI=true
+      - REACT_APP_API_URL=http://backend-tests:5000/api
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - test-network
+
+networks:
+  test-network:
+    driver: bridge
