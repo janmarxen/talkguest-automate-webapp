@@ -30,6 +30,10 @@
       "react-app/jest"
     ]
   },
+  "jest": {
+    "transformIgnorePatterns": ["/node_modules/(?!(axios)/)"],
+    "testEnvironment": "jsdom"
+  },
   "browserslist": {
     "production": [
       ">0.2%",

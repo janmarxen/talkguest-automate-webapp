@@ -315,7 +315,12 @@ class ETLService:
             self.faturacao_clean = None
             self.log("No invoice data provided - using reservation values only")
         
-        self.log(f"Final dataset: {len(self.combined_df)} unique records")
+        # If there are no records after cleaning, set combined_df to None
+        if len(self.combined_df) == 0:
+            self.log("No records found after cleaning - final dataset is empty")
+            self.combined_df = None
+        else:
+            self.log(f"Final dataset: {len(self.combined_df)} unique records")
     
     def _group_property(self, property_name: str) -> str:
         """Group property according to business rules."""
