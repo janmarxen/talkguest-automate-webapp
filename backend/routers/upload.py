@@ -80,13 +80,16 @@ def upload_file(file_type):
         if 'errors' in storage:
             del storage['errors']
         
+        # Convert preview to JSON-safe format (replace NaN with None)
+        preview_df = df.head(5).fillna('')  # Replace NaN with empty string for preview
+        
         return jsonify({
             'success': True,
             'message': f'{file_type.capitalize()} file uploaded successfully',
             'filename': file.filename,
             'columns': df.columns.tolist(),
             'row_count': len(df),
-            'preview': df.head(5).to_dict(orient='records')
+            'preview': preview_df.to_dict(orient='records')
         }), 200
         
     except Exception as e:
