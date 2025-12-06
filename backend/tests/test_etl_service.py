@@ -92,9 +92,10 @@ class TestETLService(unittest.TestCase):
         self.assertTrue(result['success'])
         
         # Verify zero-value removed from combined data
-        self.assertIsNone(self.etl.combined_df[
+        zero_count = self.etl.combined_df[
             pd.to_numeric(self.etl.combined_df[col_value], errors='coerce') <= 0
-        ].shape[0] if self.etl.combined_df is not None else None)
+        ].shape[0] if self.etl.combined_df is not None else None
+        self.assertEqual(zero_count, 0)
     
     def test_booking_commission_applied(self):
         """Test Booking.com commission adjustment."""
