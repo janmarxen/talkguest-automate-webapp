@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -7,6 +7,16 @@ function FileDropzone({ fileType, label, required, onUpload, currentFile, onDele
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(null);
+  const [uploadedFile, setUploadedFile] = useState(null);
+
+  // Sync local uploadedFile state with parent's currentFile
+  useEffect(() => {
+    if (currentFile) {
+      setUploadedFile(currentFile);
+    } else {
+      setUploadedFile(null);
+    }
+  }, [currentFile]);
 
   const onDrop = useCallback(async (acceptedFiles) => {
     if (acceptedFiles.length === 0) return;
@@ -17,9 +27,17 @@ function FileDropzone({ fileType, label, required, onUpload, currentFile, onDele
     setUploadProgress(0);
 
     try {
-      await onUpload(fileType, file, (progress) => {
+      const result = await onUpload(fileType, file, (progress) => {
         setUploadProgress(progress);
       });
+      // Set local state immediately on success to show the uploaded file
+      if (result && result.success) {
+        setUploadedFile({
+          filename: result.filename,
+          columns: result.columns,
+          row_count: result.row_count
+        });
+      }
     } catch (err) {
       setError(err.response?.data?.error || err.message || 'Upload failed');
     } finally {
@@ -40,8 +58,12 @@ function FileDropzone({ fileType, label, required, onUpload, currentFile, onDele
 
   const handleDelete = (e) => {
     e.stopPropagation();
+    setUploadedFile(null);
     onDelete(fileType);
   };
+
+  // Use local uploadedFile state for display (it syncs with currentFile via useEffect)
+  const displayFile = uploadedFile || currentFile;
 
   return (
     <div className="bg-white rounded-lg shadow p-4">
@@ -50,7 +72,7 @@ function FileDropzone({ fileType, label, required, onUpload, currentFile, onDele
           {label}
           {required && <span className="text-red-500 ml-1">*</span>}
         </h3>
-        {currentFile && (
+        {displayFile && (
           <button
             onClick={handleDelete}
             className="text-red-500 hover:text-red-700 text-sm"
@@ -61,16 +83,16 @@ function FileDropzone({ fileType, label, required, onUpload, currentFile, onDele
         )}
       </div>
 
-      {currentFile ? (
+      {displayFile ? (
         <div className="border-2 border-green-200 bg-green-50 rounded-lg p-4">
           <div className="flex items-center">
             <span className="text-green-500 text-2xl mr-3">✓</span>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-gray-900 truncate">
-                {currentFile.filename}
+                {displayFile.filename}
               </p>
               <p className="text-xs text-gray-500">
-                {currentFile.row_count} {t('rows')} • {currentFile.columns?.length} {t('columns')}
+                {displayFile.row_count} {t('rows')} • {displayFile.columns?.length} {t('columns')}
               </p>
             </div>
           </div>

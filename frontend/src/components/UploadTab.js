@@ -22,15 +22,20 @@ function UploadTab({
   const { t } = useLanguage();
   
   const handleUpload = async (fileType, file, onProgress) => {
-    const result = await uploadFile(fileType, file, onProgress);
-    if (result.success) {
-      onUploadComplete(fileType, {
-        filename: result.filename,
-        columns: result.columns,
-        row_count: result.row_count
-      });
+    try {
+      const result = await uploadFile(fileType, file, onProgress);
+      if (result.success) {
+        onUploadComplete(fileType, {
+          filename: result.filename,
+          columns: result.columns,
+          row_count: result.row_count
+        });
+      }
+      return result;
+    } catch (err) {
+      // Re-throw so FileDropzone can handle it
+      throw err;
     }
-    return result;
   };
 
   const handleDelete = async (fileType) => {
