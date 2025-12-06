@@ -1,7 +1,9 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { useLanguage } from '../contexts/LanguageContext';
 
 function FileDropzone({ fileType, label, required, onUpload, currentFile, onDelete, disabled }) {
+  const { t } = useLanguage();
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(null);
@@ -54,7 +56,7 @@ function FileDropzone({ fileType, label, required, onUpload, currentFile, onDele
             className="text-red-500 hover:text-red-700 text-sm"
             disabled={disabled}
           >
-            Remove
+            {t('remove')}
           </button>
         )}
       </div>
@@ -68,7 +70,7 @@ function FileDropzone({ fileType, label, required, onUpload, currentFile, onDele
                 {currentFile.filename}
               </p>
               <p className="text-xs text-gray-500">
-                {currentFile.row_count} rows • {currentFile.columns?.length} columns
+                {currentFile.row_count} {t('rows')} • {currentFile.columns?.length} {t('columns')}
               </p>
             </div>
           </div>
@@ -95,15 +97,15 @@ function FileDropzone({ fileType, label, required, onUpload, currentFile, onDele
                   style={{ width: `${uploadProgress}%` }}
                 />
               </div>
-              <p className="text-sm text-gray-500">Uploading... {uploadProgress}%</p>
+              <p className="text-sm text-gray-500">{t('uploading')} {uploadProgress}%</p>
             </div>
           ) : (
             <>
               <span className="text-3xl mb-2 block">📄</span>
               <p className="text-sm text-gray-600">
-                {isDragActive ? 'Drop the file here' : 'Drag & drop an Excel file here'}
+                {isDragActive ? 'Drop the file here' : t('dragDrop')}
               </p>
-              <p className="text-xs text-gray-400 mt-1">or click to browse</p>
+              <p className="text-xs text-gray-400 mt-1">{t('orClickBrowse')}</p>
             </>
           )}
         </div>

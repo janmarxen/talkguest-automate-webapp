@@ -4,6 +4,7 @@ import ProcessingSection from './ProcessingSection';
 import ErrorDisplay from './ErrorDisplay';
 import ResultsSummary from './ResultsSummary';
 import { uploadFile, deleteFile, clearAllFiles, runProcessing } from '../utils/api';
+import { useLanguage } from '../contexts/LanguageContext';
 
 function UploadTab({
   uploadStatus,
@@ -18,6 +19,8 @@ function UploadTab({
   onProcessingError,
   results
 }) {
+  const { t } = useLanguage();
+  
   const handleUpload = async (fileType, file, onProgress) => {
     const result = await uploadFile(fileType, file, onProgress);
     if (result.success) {
@@ -83,7 +86,7 @@ function UploadTab({
       <div className="bg-gray-50 rounded-xl p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-gray-900">
-            📁 Upload Data Files
+            📁 {t('uploadTitle')}
           </h2>
           {hasAnyFiles && (
             <button
@@ -91,7 +94,7 @@ function UploadTab({
               className="text-sm text-red-600 hover:text-red-800"
               disabled={loading}
             >
-              Clear All
+              {t('clearAll')}
             </button>
           )}
         </div>
@@ -99,7 +102,7 @@ function UploadTab({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <FileDropzone
             fileType="guests"
-            label="Guests List"
+            label={t('guestsList')}
             required={true}
             onUpload={handleUpload}
             currentFile={uploadStatus.guests}
@@ -108,7 +111,7 @@ function UploadTab({
           />
           <FileDropzone
             fileType="reservations"
-            label="Reservations"
+            label={t('reservations')}
             required={true}
             onUpload={handleUpload}
             currentFile={uploadStatus.reservations}
@@ -117,7 +120,7 @@ function UploadTab({
           />
           <FileDropzone
             fileType="invoices"
-            label="Invoices (Optional)"
+            label={t('invoicesOptional')}
             required={false}
             onUpload={handleUpload}
             currentFile={uploadStatus.invoices}
@@ -127,7 +130,7 @@ function UploadTab({
         </div>
 
         <p className="text-xs text-gray-500 mt-4">
-          * Required files. Accepts Excel files (.xlsx, .xls)
+          {t('requiredFiles')}
         </p>
       </div>
 

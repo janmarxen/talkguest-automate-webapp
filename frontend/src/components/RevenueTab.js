@@ -4,8 +4,10 @@ import PieChart from './charts/PieChart';
 import TimeSeriesChart from './charts/TimeSeriesChart';
 import DataTable from './charts/DataTable';
 import { downloadRevenue } from '../utils/api';
+import { useLanguage } from '../contexts/LanguageContext';
 
 function RevenueTab({ data }) {
+  const { t } = useLanguage();
   const [showInvoices, setShowInvoices] = useState(false);
   
   const reservationsSummary = data?.reservations_summary || {};
@@ -54,7 +56,7 @@ function RevenueTab({ data }) {
               <p className="text-2xl font-bold text-gray-900">
                 €{(reservationsSummary.total_gross_value || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}
               </p>
-              <p className="text-sm text-gray-500">Gross Revenue</p>
+              <p className="text-sm text-gray-500">{t('grossRevenue')}</p>
             </div>
           </div>
         </div>
@@ -65,7 +67,7 @@ function RevenueTab({ data }) {
               <p className="text-2xl font-bold text-red-600">
                 €{(reservationsSummary.total_commissions || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}
               </p>
-              <p className="text-sm text-gray-500">Commissions</p>
+              <p className="text-sm text-gray-500">{t('totalCommissions')}</p>
             </div>
           </div>
         </div>
@@ -76,7 +78,7 @@ function RevenueTab({ data }) {
               <p className="text-2xl font-bold text-orange-600">
                 €{(reservationsSummary.total_iva || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}
               </p>
-              <p className="text-sm text-gray-500">IVA/VAT</p>
+              <p className="text-sm text-gray-500">{t('totalIVA')}</p>
             </div>
           </div>
         </div>
@@ -87,7 +89,7 @@ function RevenueTab({ data }) {
               <p className="text-2xl font-bold text-green-600">
                 €{(reservationsSummary.total_net_value || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}
               </p>
-              <p className="text-sm text-gray-500">Net Revenue</p>
+              <p className="text-sm text-gray-500">{t('netRevenue')}</p>
             </div>
           </div>
         </div>
@@ -148,7 +150,7 @@ function RevenueTab({ data }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Bar Chart - Revenue by Property */}
         <div className="bg-white rounded-xl shadow p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Revenue by Property</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('revenueByProperty')}</h3>
           <BarChart
             data={propertyChartData}
             xKey="property"
@@ -161,12 +163,12 @@ function RevenueTab({ data }) {
 
         {/* Pie Chart - Revenue Breakdown */}
         <div className="bg-white rounded-xl shadow p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Revenue Breakdown</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('revenueBreakdown')}</h3>
           <PieChart
             data={[
-              { label: 'Net Revenue', value: reservationsSummary.total_net_value || 0 },
-              { label: 'Commissions', value: reservationsSummary.total_commissions || 0 },
-              { label: 'IVA/VAT', value: reservationsSummary.total_iva || 0 }
+              { label: t('netRevenue'), value: reservationsSummary.total_net_value || 0 },
+              { label: t('totalCommissions'), value: reservationsSummary.total_commissions || 0 },
+              { label: t('totalIVA'), value: reservationsSummary.total_iva || 0 }
             ]}
             valueKey="value"
             labelKey="label"
@@ -220,16 +222,16 @@ function RevenueTab({ data }) {
 
       {/* Data Table */}
       <div className="bg-white rounded-xl shadow p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Revenue by Property Details</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('revenueByProperty')} {t('detailedData')}</h3>
         <DataTable
           data={reservationsByProperty}
           columns={[
-            { key: 'property', label: 'Property' },
-            { key: 'gross_value', label: 'Gross (€)', type: 'currency' },
-            { key: 'commission', label: 'Commission (€)', type: 'currency' },
-            { key: 'iva_amount', label: 'IVA (€)', type: 'currency' },
-            { key: 'net_value', label: 'Net (€)', type: 'currency' },
-            { key: 'reservation_count', label: 'Reservations', type: 'number' }
+            { key: 'property', label: t('property') },
+            { key: 'gross_value', label: `${t('grossValue')} (€)`, type: 'currency' },
+            { key: 'commission', label: `${t('commission')} (€)`, type: 'currency' },
+            { key: 'iva_amount', label: `${t('ivaAmount')} (€)`, type: 'currency' },
+            { key: 'net_value', label: `${t('netValue')} (€)`, type: 'currency' },
+            { key: 'reservation_count', label: t('totalReservations'), type: 'number' }
           ]}
         />
       </div>

@@ -3,8 +3,10 @@ import BarChart from './charts/BarChart';
 import PieChart from './charts/PieChart';
 import PropertySelector from './charts/PropertySelector';
 import DataTable from './charts/DataTable';
+import { useLanguage } from '../contexts/LanguageContext';
 
 function OccupancyTab({ data }) {
+  const { t } = useLanguage();
   const [selectedProperty, setSelectedProperty] = useState(null);
   const generalStats = data?.general_stats || {};
   const propertyData = data?.by_property || {};
@@ -64,7 +66,7 @@ function OccupancyTab({ data }) {
             <span className="text-3xl mr-4">👥</span>
             <div>
               <p className="text-3xl font-bold text-gray-900">{generalStats.total_guests || 0}</p>
-              <p className="text-sm text-gray-500">Unique Guests</p>
+              <p className="text-sm text-gray-500">{t('uniqueGuests')}</p>
             </div>
           </div>
         </div>
@@ -73,7 +75,7 @@ function OccupancyTab({ data }) {
             <span className="text-3xl mr-4">🌙</span>
             <div>
               <p className="text-3xl font-bold text-gray-900">{generalStats.total_nights || 0}</p>
-              <p className="text-sm text-gray-500">Total Nights</p>
+              <p className="text-sm text-gray-500">{t('totalNights')}</p>
             </div>
           </div>
         </div>
@@ -82,7 +84,7 @@ function OccupancyTab({ data }) {
             <span className="text-3xl mr-4">📋</span>
             <div>
               <p className="text-3xl font-bold text-gray-900">{generalStats.total_reservations || 0}</p>
-              <p className="text-sm text-gray-500">Total Reservations</p>
+              <p className="text-sm text-gray-500">{t('totalReservations')}</p>
             </div>
           </div>
         </div>
@@ -93,14 +95,14 @@ function OccupancyTab({ data }) {
         properties={properties}
         selected={selectedProperty}
         onSelect={setSelectedProperty}
-        label="Filter by Property"
+        label={t('selectProperty')}
       />
 
       {/* Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Bar Chart - Nights by Property */}
         <div className="bg-white rounded-xl shadow p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Nights by Property</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('nightsOverTime')}</h3>
           <BarChart
             data={propertyTotals}
             xKey="property"
@@ -113,7 +115,7 @@ function OccupancyTab({ data }) {
         {/* Pie Chart - Nationality Distribution */}
         <div className="bg-white rounded-xl shadow p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            Nationality Distribution
+            {t('guestDistribution')}
             {selectedProperty && <span className="text-sm font-normal text-gray-500 ml-2">({selectedProperty})</span>}
           </h3>
           <PieChart
@@ -127,7 +129,7 @@ function OccupancyTab({ data }) {
 
       {/* Bar Chart - Person Nights by Property */}
       <div className="bg-white rounded-xl shadow p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Person-Nights by Property</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('personNights')} by Property</h3>
         <BarChart
           data={propertyTotals}
           xKey="property"
@@ -140,16 +142,16 @@ function OccupancyTab({ data }) {
       {/* Data Table */}
       <div className="bg-white rounded-xl shadow p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">
-          Detailed Nationality Breakdown
+          {t('detailedData')}
           {selectedProperty && <span className="text-sm font-normal text-gray-500 ml-2">({selectedProperty})</span>}
         </h3>
         <DataTable
           data={nationalityData}
           columns={[
-            { key: 'nationality', label: 'Nationality' },
-            { key: 'unique_guests', label: 'Guests', type: 'number' },
-            { key: 'total_nights', label: 'Nights', type: 'number' },
-            { key: 'person_nights', label: 'Person-Nights', type: 'number' }
+            { key: 'nationality', label: t('nationality') },
+            { key: 'unique_guests', label: t('uniqueGuests'), type: 'number' },
+            { key: 'total_nights', label: t('totalNights'), type: 'number' },
+            { key: 'person_nights', label: t('personNights'), type: 'number' }
           ]}
         />
       </div>

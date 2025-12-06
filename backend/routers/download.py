@@ -144,10 +144,17 @@ def download_all():
     occupancy = storage['results'].get('occupancy')
     revenue = storage['results'].get('revenue')
     
-    if not occupancy or not revenue:
+    # Check that we have at least occupancy data (revenue may not have all optional keys)
+    if not occupancy:
         return jsonify({
             'success': False,
-            'error': 'Complete results not available'
+            'error': 'Occupancy data not available'
+        }), 404
+    
+    if not revenue or not revenue.get('reservations_summary'):
+        return jsonify({
+            'success': False,
+            'error': 'Revenue data not available'
         }), 404
     
     try:

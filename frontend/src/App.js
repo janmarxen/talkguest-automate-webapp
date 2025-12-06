@@ -5,8 +5,10 @@ import UploadTab from './components/UploadTab';
 import OccupancyTab from './components/OccupancyTab';
 import RevenueTab from './components/RevenueTab';
 import { getUploadStatus, getProcessingStatus, getAllResults } from './utils/api';
+import { useLanguage } from './contexts/LanguageContext';
 
 function App() {
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState('upload');
   const [uploadStatus, setUploadStatus] = useState({
     guests: null,
@@ -98,9 +100,9 @@ function App() {
   };
 
   const tabs = [
-    { id: 'upload', label: 'Upload & Process', icon: '📁' },
-    { id: 'occupancy', label: 'Occupancy', icon: '📊', disabled: !results },
-    { id: 'revenue', label: 'Revenue', icon: '💰', disabled: !results }
+    { id: 'upload', label: t('tabUpload'), icon: '📁' },
+    { id: 'occupancy', label: t('tabOccupancy'), icon: '📊', disabled: !results },
+    { id: 'revenue', label: t('tabRevenue'), icon: '💰', disabled: !results }
   ];
 
   return (
