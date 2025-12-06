@@ -31,7 +31,12 @@ def create_app(config=None):
     # Enable CORS for frontend communication
     CORS(app, resources={
         r"/api/*": {
-            "origins": ["http://localhost:3000", "http://frontend:3000"],
+            "origins": [
+                "http://localhost:3000", 
+                "http://frontend:3000",
+                "https://talkguest-automate-webapp.onrender.com",
+                "https://*.onrender.com"
+            ],
             "methods": ["GET", "POST", "DELETE", "OPTIONS"],
             "allow_headers": ["Content-Type"]
         }
