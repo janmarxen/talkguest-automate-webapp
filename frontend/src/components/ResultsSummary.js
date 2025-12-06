@@ -90,7 +90,7 @@ function ResultsSummary({ data }) {
       </div>
 
       <p className="text-xs text-gray-500 mt-4 text-center">
-        Navigate to the Occupancy and Revenue tabs for detailed visualizations
+        {t('navigateToTabs')}
       </p>
     </div>
   );

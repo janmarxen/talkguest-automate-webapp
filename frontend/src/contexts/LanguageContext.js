@@ -3,8 +3,8 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 const translations = {
   en: {
     // Header
-    appTitle: 'TalkGuest Analytics',
-    appSubtitle: 'Hospitality Data Processing',
+    appTitle: 'TalkGuest Data Processing',
+    appSubtitle: '',
     
     // Tabs
     tabUpload: 'Upload & Process',
@@ -73,6 +73,21 @@ const translations = {
     
     // Charts
     noDataAvailable: 'No data available',
+    personNightsByProperty: 'Person-Nights by Property',
+    netVsCommissions: 'Net Revenue vs Commissions by Property',
+    ivaByRegion: 'IVA/VAT by Region',
+    exportReports: 'Export Reports',
+    exportDescription: 'Download detailed Excel reports with full calculations and breakdowns.',
+    downloadRevenueReport: 'Download Revenue Report',
+    invoiceDataAvailable: 'Invoice Data Available',
+    invoiceDataDescription: 'Compare reservation data with invoice records',
+    showingInvoiceData: 'Showing Invoice Data',
+    showInvoiceComparison: 'Show Invoice Comparison',
+    invoiceSummary: 'Invoice Summary',
+    invoiceGross: 'Invoice Gross',
+    invoiceIVA: 'Invoice IVA',
+    invoiceNet: 'Invoice Net',
+    totalInvoices: 'Total Invoices',
     
     // Errors
     uploadFailed: 'Upload failed',
@@ -83,12 +98,13 @@ const translations = {
     // Language
     language: 'Language',
     english: 'English',
-    portuguese: 'Português'
+    portuguese: 'Português',
+    navigateToTabs: 'Navigate to the Occupancy and Revenue tabs for detailed visualizations'
   },
   pt: {
     // Header
-    appTitle: 'TalkGuest Analytics',
-    appSubtitle: 'Processamento de Dados de Hotelaria',
+    appTitle: 'Processamento de Dados da TalkGuest',
+    appSubtitle: '',
     
     // Tabs
     tabUpload: 'Carregar e Processar',
@@ -157,6 +173,21 @@ const translations = {
     
     // Charts
     noDataAvailable: 'Sem dados disponíveis',
+    personNightsByProperty: 'Pessoa-Noites por Propriedade',
+    netVsCommissions: 'Receita Líquida vs Comissões por Propriedade',
+    ivaByRegion: 'IVA por Região',
+    exportReports: 'Exportar Relatórios',
+    exportDescription: 'Descarregue relatórios Excel detalhados com cálculos e discriminações completas.',
+    downloadRevenueReport: 'Descarregar Relatório de Receitas',
+    invoiceDataAvailable: 'Dados de Faturas Disponíveis',
+    invoiceDataDescription: 'Compare os dados de reservas com os registos de faturas',
+    showingInvoiceData: 'A Mostrar Dados de Faturas',
+    showInvoiceComparison: 'Mostrar Comparação de Faturas',
+    invoiceSummary: 'Resumo de Faturas',
+    invoiceGross: 'Fatura Bruta',
+    invoiceIVA: 'IVA da Fatura',
+    invoiceNet: 'Fatura Líquida',
+    totalInvoices: 'Total de Faturas',
     
     // Errors
     uploadFailed: 'Falha no carregamento',
@@ -167,7 +198,8 @@ const translations = {
     // Language
     language: 'Idioma',
     english: 'English',
-    portuguese: 'Português'
+    portuguese: 'Português',
+    navigateToTabs: 'Navegue para os separadores Ocupação e Receitas para visualizações detalhadas'
   }
 };
 
@@ -177,7 +209,7 @@ export function LanguageProvider({ children }) {
   const [language, setLanguage] = useState(() => {
     // Check localStorage for saved preference
     const saved = localStorage.getItem('talkguest-language');
-    return saved || 'en';
+    return saved || 'pt';  // Default to Portuguese
   });
 
   useEffect(() => {
@@ -185,7 +217,14 @@ export function LanguageProvider({ children }) {
   }, [language]);
 
   const t = (key) => {
-    return translations[language][key] || translations.en[key] || key;
+    // Use hasOwnProperty to properly handle empty strings
+    if (translations[language].hasOwnProperty(key)) {
+      return translations[language][key];
+    }
+    if (translations.en.hasOwnProperty(key)) {
+      return translations.en[key];
+    }
+    return key;
   };
 
   const toggleLanguage = () => {

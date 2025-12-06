@@ -17,7 +17,7 @@ function Header() {
             />
             <div>
               <h1 className="text-xl font-bold">{t('appTitle')}</h1>
-              <p className="text-primary-200 text-xs">{t('appSubtitle')}</p>
+              {t('appSubtitle') && <p className="text-primary-200 text-xs">{t('appSubtitle')}</p>}
             </div>
           </div>
           <div className="flex items-center gap-4">

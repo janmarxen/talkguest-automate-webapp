@@ -129,7 +129,7 @@ function OccupancyTab({ data }) {
 
       {/* Bar Chart - Person Nights by Property */}
       <div className="bg-white rounded-xl shadow p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('personNights')} by Property</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('personNightsByProperty')}</h3>
         <BarChart
           data={propertyTotals}
           xKey="property"

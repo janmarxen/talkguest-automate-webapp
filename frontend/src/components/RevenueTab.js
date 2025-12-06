@@ -180,13 +180,13 @@ function RevenueTab({ data }) {
 
       {/* Commission vs Net by Property */}
       <div className="bg-white rounded-xl shadow p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Net Revenue vs Commissions by Property</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('netVsCommissions')}</h3>
         <TimeSeriesChart
           data={propertyChartData}
           xKey="property"
           lines={[
-            { key: 'net', color: '#10b981', label: 'Net Revenue' },
-            { key: 'commission', color: '#ef4444', label: 'Commission' }
+            { key: 'net', color: '#10b981', label: t('netRevenue') },
+            { key: 'commission', color: '#ef4444', label: t('commission') }
           ]}
           height={300}
         />
@@ -195,7 +195,7 @@ function RevenueTab({ data }) {
       {/* IVA Breakdown */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white rounded-xl shadow p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">IVA/VAT by Region</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('ivaByRegion')}</h3>
           <PieChart
             data={ivaChartData}
             valueKey="value"
@@ -207,15 +207,15 @@ function RevenueTab({ data }) {
 
         {/* Download Section */}
         <div className="bg-gradient-to-br from-green-50 to-blue-50 rounded-xl shadow p-6 flex flex-col justify-center">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Export Reports</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('exportReports')}</h3>
           <p className="text-sm text-gray-600 mb-4">
-            Download detailed Excel reports with full calculations and breakdowns.
+            {t('exportDescription')}
           </p>
           <button
             onClick={downloadRevenue}
             className="w-full px-6 py-3 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors"
           >
-            📥 Download Revenue Report
+            📥 {t('downloadRevenueReport')}
           </button>
         </div>
       </div>

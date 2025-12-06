@@ -13,7 +13,7 @@ function BarChart({ data, xKey, yKey, color = '#3b82f6', height = 300, formatVal
 
     const container = containerRef.current;
     const width = container.clientWidth;
-    const margin = { top: 20, right: 30, bottom: 80, left: 60 };
+    const margin = { top: 20, right: 30, bottom: 120, left: 60 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
@@ -43,7 +43,15 @@ function BarChart({ data, xKey, yKey, color = '#3b82f6', height = 300, formatVal
       .attr('text-anchor', 'end')
       .attr('dx', '-0.5em')
       .attr('dy', '0.5em')
-      .style('font-size', '10px');
+      .style('font-size', '10px')
+      .each(function() {
+        const text = d3.select(this);
+        const label = text.text();
+        // Truncate long labels
+        if (label.length > 20) {
+          text.text(label.substring(0, 18) + '...');
+        }
+      });
 
     // Y axis
     g.append('g')
