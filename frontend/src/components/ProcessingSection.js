@@ -25,7 +25,7 @@ function ProcessingSection({ canProcess, loading, processingStatus, onProcess })
           {processingStatus === 'completed' && (
             <div className="flex items-center text-green-600">
               <span className="mr-2">✓</span>
-              <span className="text-sm font-medium">Processing completed successfully</span>
+              <span className="text-sm font-medium">{t('processingCompleted')}</span>
             </div>
           )}
           {processingStatus === 'failed' && (
@@ -56,7 +56,7 @@ function ProcessingSection({ canProcess, loading, processingStatus, onProcess })
               {t('processing')}
             </div>
           ) : (
-            `🚀 ${t('processData')}`
+            `${t('processData')}`
           )}
         </button>
       </div>

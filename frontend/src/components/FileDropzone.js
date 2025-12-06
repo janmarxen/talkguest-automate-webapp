@@ -7,16 +7,19 @@ function FileDropzone({ fileType, label, required, onUpload, currentFile, onDele
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(null);
-  const [uploadedFile, setUploadedFile] = useState(null);
+  // Local state to immediately show upload success
+  const [localFile, setLocalFile] = useState(null);
 
-  // Sync local uploadedFile state with parent's currentFile
+  // Sync localFile with currentFile from parent when parent updates
   useEffect(() => {
     if (currentFile) {
-      setUploadedFile(currentFile);
-    } else {
-      setUploadedFile(null);
+      setLocalFile(currentFile);
+      setError(null); // Clear any error when parent confirms file
     }
   }, [currentFile]);
+
+  // The file to display - prioritize local state, fall back to parent state
+  const displayFile = localFile || currentFile;
 
   const onDrop = useCallback(async (acceptedFiles) => {
     if (acceptedFiles.length === 0) return;
@@ -25,21 +28,30 @@ function FileDropzone({ fileType, label, required, onUpload, currentFile, onDele
     setUploading(true);
     setError(null);
     setUploadProgress(0);
+    setLocalFile(null);
 
     try {
       const result = await onUpload(fileType, file, (progress) => {
         setUploadProgress(progress);
       });
-      // Set local state immediately on success to show the uploaded file
-      if (result && result.success) {
-        setUploadedFile({
+      
+      // Check if result exists and has success flag
+      if (result?.success) {
+        const fileInfo = {
           filename: result.filename,
           columns: result.columns,
           row_count: result.row_count
-        });
+        };
+        setLocalFile(fileInfo);
+      } else if (result?.error) {
+        setError(result.error);
       }
     } catch (err) {
-      setError(err.response?.data?.error || err.message || 'Upload failed');
+      // Only show error if it's a real error, not just missing result
+      const errorMessage = err?.response?.data?.error || err?.message;
+      if (errorMessage) {
+        setError(errorMessage);
+      }
     } finally {
       setUploading(false);
       setUploadProgress(0);
@@ -58,12 +70,9 @@ function FileDropzone({ fileType, label, required, onUpload, currentFile, onDele
 
   const handleDelete = (e) => {
     e.stopPropagation();
-    setUploadedFile(null);
+    setLocalFile(null);
     onDelete(fileType);
   };
-
-  // Use local uploadedFile state for display (it syncs with currentFile via useEffect)
-  const displayFile = uploadedFile || currentFile;
 
   return (
     <div className="bg-white rounded-lg shadow p-4">

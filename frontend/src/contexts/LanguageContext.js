@@ -76,6 +76,7 @@ const translations = {
     // Errors
     uploadFailed: 'Upload failed',
     processingFailed: 'Processing failed',
+    processingCompleted: 'Processing completed successfully',
     noResultsAvailable: 'No results available. Please run processing first.',
     
     // Language
@@ -158,6 +159,7 @@ const translations = {
     // Errors
     uploadFailed: 'Falha no carregamento',
     processingFailed: 'Falha no processamento',
+    processingCompleted: 'Processamento concluído com sucesso',
     noResultsAvailable: 'Sem resultados disponíveis. Por favor execute o processamento primeiro.',
     
     // Language

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
+import logo from '../img/luzzme_logo.avif';
 
 function Header() {
   const { language, toggleLanguage, t } = useLanguage();
@@ -9,7 +10,11 @@ function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <span className="text-2xl mr-3">🏨</span>
+            <img 
+              src={logo} 
+              alt="Luzzme Logo" 
+              className="h-10 w-auto mr-3 rounded-lg bg-white p-1"
+            />
             <div>
               <h1 className="text-xl font-bold">{t('appTitle')}</h1>
               <p className="text-primary-200 text-xs">{t('appSubtitle')}</p>
