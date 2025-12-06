@@ -31,8 +31,7 @@
     ]
   },
   "jest": {
-    "transformIgnorePatterns": ["/node_modules/(?!(axios)/)"],
-    "testEnvironment": "jsdom"
+    "transformIgnorePatterns": ["/node_modules/(?!(axios)/)"]
   },
   "browserslist": {
     "production": [
