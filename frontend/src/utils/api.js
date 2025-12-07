@@ -9,7 +9,7 @@ const getApiBaseUrl = () => {
   
   // Auto-detect production on Render.com
   if (window.location.hostname.includes('onrender.com')) {
-    return 'https://talkguest-automate-webapp-1.onrender.com/api';
+    return 'https://talkguest-automate-webapp-3.onrender.com/api';
   }
   
   // Default to localhost for development
