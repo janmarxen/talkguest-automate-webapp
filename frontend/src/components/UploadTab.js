@@ -54,7 +54,9 @@ function UploadTab({
         console.log(`[UploadTab] onUploadComplete called`);
       } else if (data && typeof data === 'object' && data.error) {
         console.error(`[UploadTab] Server returned error:`, data.error);
-        throw new Error(data.error);
+        // Translate error codes (e.g., FILE_SWAP_*) using the translation function
+        const translatedError = t(data.error) !== data.error ? t(data.error) : data.error;
+        throw new Error(translatedError);
       } else {
         console.error(`[UploadTab] Unexpected response format:`, data);
         throw new Error('Unexpected response format from server');

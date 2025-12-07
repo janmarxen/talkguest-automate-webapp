@@ -186,6 +186,40 @@ class TestUploadEndpoints(TestAPIBase):
         status_response = self.client.get('/api/upload/status')
         status_data = json.loads(status_response.data)
         self.assertIsNone(status_data['files']['guests'])
+    
+    def test_file_swap_reservations_uploaded_as_guests(self):
+        """Test error when reservations file is uploaded to guests field."""
+        # Try to upload reservations file as guests
+        res_file = self._create_excel_file(self.mock_data['reservations'])
+        
+        response = self.client.post(
+            '/api/upload/guests',
+            data={'file': (res_file, 'guests.xlsx')},
+            content_type='multipart/form-data'
+        )
+        
+        self.assertEqual(response.status_code, 400)
+        data = json.loads(response.data)
+        self.assertFalse(data['success'])
+        self.assertEqual(data['error'], 'FILE_SWAP_GUESTS_HAS_RESERVATIONS')
+        self.assertEqual(data['error_type'], 'file_swap')
+    
+    def test_file_swap_guests_uploaded_as_reservations(self):
+        """Test error when guests file is uploaded to reservations field."""
+        # Try to upload guests file as reservations
+        guests_file = self._create_excel_file(self.mock_data['guests'])
+        
+        response = self.client.post(
+            '/api/upload/reservations',
+            data={'file': (guests_file, 'reservations.xlsx')},
+            content_type='multipart/form-data'
+        )
+        
+        self.assertEqual(response.status_code, 400)
+        data = json.loads(response.data)
+        self.assertFalse(data['success'])
+        self.assertEqual(data['error'], 'FILE_SWAP_RESERVATIONS_HAS_GUESTS')
+        self.assertEqual(data['error_type'], 'file_swap')
 
 
 class TestProcessEndpoints(TestAPIBase):

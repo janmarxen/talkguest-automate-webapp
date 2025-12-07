@@ -94,6 +94,8 @@ const translations = {
     processingFailed: 'Processing failed',
     processingCompleted: 'Processing completed successfully',
     noResultsAvailable: 'No results available. Please run processing first.',
+    FILE_SWAP_GUESTS_HAS_RESERVATIONS: 'This looks like a reservations file. Did you mean to upload it to the Reservations field instead?',
+    FILE_SWAP_RESERVATIONS_HAS_GUESTS: 'This looks like a guests file. Did you mean to upload it to the Guests List field instead?',
     
     // Language
     language: 'Language',
@@ -194,6 +196,8 @@ const translations = {
     processingFailed: 'Falha no processamento',
     processingCompleted: 'Processamento concluído com sucesso',
     noResultsAvailable: 'Sem resultados disponíveis. Por favor execute o processamento primeiro.',
+    FILE_SWAP_GUESTS_HAS_RESERVATIONS: 'Este parece ser um ficheiro de reservas. Será que queria carregá-lo no campo de Reservas?',
+    FILE_SWAP_RESERVATIONS_HAS_GUESTS: 'Este parece ser um ficheiro de hóspedes. Será que queria carregá-lo no campo de Lista de Hóspedes?',
     
     // Language
     language: 'Idioma',

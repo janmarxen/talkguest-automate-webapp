@@ -13,9 +13,63 @@ upload_bp = Blueprint('upload', __name__)
 
 ALLOWED_EXTENSIONS = {'xlsx', 'xls'}
 
+# Column markers for file type detection
+GUESTS_MARKERS = {'Nome', 'Pais'}  # Portuguese guests file columns
+RESERVATIONS_MARKERS_PT = {'Reserva', 'Hóspede', 'Noites', 'Alojamento', 'Valor Reserva'}
+RESERVATIONS_MARKERS_EN = {'Reservation', 'Guest', 'Nights', 'Rental', 'Reservation Value'}
+
+
 def allowed_file(filename):
     """Check if file has allowed extension."""
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+def detect_file_type(df):
+    """
+    Detect the actual file type based on column headers.
+    
+    Returns:
+        tuple: (detected_type, confidence) where type is 'guests', 'reservations', or 'unknown'
+    """
+    columns = set(df.columns)
+    
+    guests_matches = len(columns & GUESTS_MARKERS)
+    reservations_pt_matches = len(columns & RESERVATIONS_MARKERS_PT)
+    reservations_en_matches = len(columns & RESERVATIONS_MARKERS_EN)
+    reservations_matches = max(reservations_pt_matches, reservations_en_matches)
+    
+    # Guests file typically has Nome and Pais
+    if guests_matches >= 2 and reservations_matches < 3:
+        return 'guests', guests_matches
+    
+    # Reservations file has many specific columns
+    if reservations_matches >= 3:
+        return 'reservations', reservations_matches
+    
+    return 'unknown', 0
+
+
+def validate_file_type(df, expected_type):
+    """
+    Validate that the uploaded file matches the expected type.
+    
+    Returns:
+        tuple: (is_valid, error_message, error_code)
+    """
+    detected_type, confidence = detect_file_type(df)
+    
+    if detected_type == 'unknown':
+        # Can't determine, allow it
+        return True, None, None
+    
+    if detected_type != expected_type:
+        # File appears to be swapped
+        if expected_type == 'guests' and detected_type == 'reservations':
+            return False, 'FILE_SWAP_GUESTS_HAS_RESERVATIONS', 'file_swap'
+        elif expected_type == 'reservations' and detected_type == 'guests':
+            return False, 'FILE_SWAP_RESERVATIONS_HAS_GUESTS', 'file_swap'
+    
+    return True, None, None
 
 
 @upload_bp.route('/upload/<file_type>', methods=['POST'])
@@ -63,6 +117,16 @@ def upload_file(file_type):
         
         # Try to parse as Excel to validate
         df = pd.read_excel(io.BytesIO(file_content))
+        
+        # Validate file type matches expected type (guests vs reservations)
+        if file_type in ['guests', 'reservations']:
+            is_valid, error_code, error_type = validate_file_type(df, file_type)
+            if not is_valid:
+                return jsonify({
+                    'success': False,
+                    'error': error_code,
+                    'error_type': error_type
+                }), 400
         
         # Store in app storage
         storage = current_app.config['DATA_STORAGE']
