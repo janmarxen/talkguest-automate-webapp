@@ -1,7 +1,22 @@
 import axios from 'axios';
 
-// API base URL - uses environment variable or defaults to localhost
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+// API base URL - uses environment variable, auto-detects production, or defaults to localhost
+const getApiBaseUrl = () => {
+  // First check for explicit environment variable
+  if (process.env.REACT_APP_API_URL) {
+    return process.env.REACT_APP_API_URL;
+  }
+  
+  // Auto-detect production on Render.com
+  if (window.location.hostname.includes('onrender.com')) {
+    return 'https://talkguest-automate-webapp-1.onrender.com/api';
+  }
+  
+  // Default to localhost for development
+  return 'http://localhost:5000/api';
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 const api = axios.create({
   baseURL: API_BASE_URL,
