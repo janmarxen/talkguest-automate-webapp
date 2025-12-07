@@ -35,7 +35,9 @@ def create_app(config=None):
                 "http://localhost:3000", 
                 "http://frontend:3000",
                 "https://talkguest-automate-webapp.onrender.com",
-                "https://*.onrender.com"
+                "https://*.onrender.com",
+                "https://talkguest-webapp-frontend-production.up.railway.app",
+                "https://*.railway.app"
             ],
             "methods": ["GET", "POST", "DELETE", "OPTIONS"],
             "allow_headers": ["Content-Type"]

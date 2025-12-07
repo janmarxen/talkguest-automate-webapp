@@ -7,6 +7,11 @@ const getApiBaseUrl = () => {
     return process.env.REACT_APP_API_URL;
   }
   
+  // Auto-detect production on Railway
+  if (window.location.hostname.includes('railway.app')) {
+    return 'https://talkguest-webapp-backend-production.up.railway.app/api';
+  }
+  
   // Auto-detect production on Render.com
   if (window.location.hostname.includes('onrender.com')) {
     return 'https://talkguest-automate-webapp-3.onrender.com/api';
