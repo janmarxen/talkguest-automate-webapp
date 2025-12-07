@@ -63,6 +63,28 @@ function UploadTab({
       }
     } catch (err) {
       console.error(`[UploadTab] Upload exception:`, err);
+      
+      // Check if this is an axios error with response data (e.g., 400 status)
+      if (err.response && err.response.data) {
+        let errorData = err.response.data;
+        
+        // Parse if it's a string
+        if (typeof errorData === 'string') {
+          try {
+            errorData = JSON.parse(errorData);
+          } catch (e) {
+            // Keep as string
+          }
+        }
+        
+        // Extract and translate the error message
+        if (errorData && errorData.error) {
+          const translatedError = t(errorData.error) !== errorData.error ? t(errorData.error) : errorData.error;
+          throw new Error(translatedError);
+        }
+      }
+      
+      // Re-throw the original error if we couldn't extract a better message
       throw err;
     }
   };
