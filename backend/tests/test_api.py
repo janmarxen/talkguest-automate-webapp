@@ -10,12 +10,16 @@ import json
 import io
 import sys
 import os
+from unittest.mock import patch
+
+from openpyxl import Workbook
 
 # Add parent directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 from app import create_app
 from tests.generate_mock_data import MockDataGenerator
+from routers.upload import read_excel_robust
 
 
 class TestAPIBase(unittest.TestCase):
@@ -186,6 +190,23 @@ class TestUploadEndpoints(TestAPIBase):
         status_response = self.client.get('/api/upload/status')
         status_data = json.loads(status_response.data)
         self.assertIsNone(status_data['files']['guests'])
+
+    def test_read_excel_robust_falls_back_on_nat_error(self):
+        """Test Excel reader fallback when pandas hits the NaT timetuple error."""
+        workbook = Workbook()
+        worksheet = workbook.active
+        worksheet.append(['Hóspede', 'Checkin'])
+        worksheet.append(['Jane Doe', None])
+        buffer = io.BytesIO()
+        workbook.save(buffer)
+        buffer.seek(0)
+
+        with patch('routers.upload.pd.read_excel', side_effect=Exception('NaTType does not support timetuple')):
+            df = read_excel_robust(buffer.getvalue())
+
+        self.assertEqual(list(df.columns), ['Hóspede', 'Checkin'])
+        self.assertEqual(len(df), 1)
+        self.assertEqual(df.iloc[0]['Hóspede'], 'Jane Doe')
     
     def test_file_swap_reservations_uploaded_as_guests(self):
         """Test error when reservations file is uploaded to guests field."""

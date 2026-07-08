@@ -4,9 +4,10 @@ Upload Router
 Handles file uploads for guests, reservations, and invoices data.
 """
 
+import io
 from flask import Blueprint, request, jsonify, current_app
 import pandas as pd
-import io
+from openpyxl import load_workbook
 
 upload_bp = Blueprint('upload', __name__)
 
@@ -72,6 +73,34 @@ def validate_file_type(df, expected_type):
     return True, None, None
 
 
+def read_excel_robust(file_content):
+    """
+    Read an Excel file into a DataFrame.
+
+    Pandas handles the common path, but some reservation files contain date
+    cells that can trigger NaT-related parsing failures. In that case, fall
+    back to openpyxl and build the DataFrame from raw cell values.
+    """
+    try:
+        return pd.read_excel(io.BytesIO(file_content))
+    except Exception as exc:
+        error_text = str(exc)
+
+        if 'NaTType does not support timetuple' not in error_text:
+            raise
+
+        workbook = load_workbook(io.BytesIO(file_content), data_only=True, read_only=True)
+        worksheet = workbook.worksheets[0]
+        rows = list(worksheet.iter_rows(values_only=True))
+
+        if not rows:
+            return pd.DataFrame()
+
+        headers = [str(header).strip() if header is not None else '' for header in rows[0]]
+        data_rows = rows[1:]
+        return pd.DataFrame(data_rows, columns=headers)
+
+
 @upload_bp.route('/upload/<file_type>', methods=['POST'])
 def upload_file(file_type):
     """
@@ -116,7 +145,7 @@ def upload_file(file_type):
         file_content = file.read()
         
         # Try to parse as Excel to validate
-        df = pd.read_excel(io.BytesIO(file_content))
+        df = read_excel_robust(file_content)
         
         # Validate file type matches expected type (guests vs reservations)
         if file_type in ['guests', 'reservations']:
