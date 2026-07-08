@@ -96,6 +96,54 @@ class TestETLService(unittest.TestCase):
             pd.to_numeric(self.etl.combined_df[col_value], errors='coerce') <= 0
         ].shape[0] if self.etl.combined_df is not None else None
         self.assertEqual(zero_count, 0)
+
+    def test_removes_indisponivel_reservation_blocks(self):
+        """Test that unavailable reservation blocks are removed from the pipeline."""
+        col_reservation_id = self.res_cols['reservation_id']
+        col_status = self.res_cols['status']
+        col_guest = self.res_cols['guest']
+        col_property = self.res_cols['property']
+        col_checkin = self.res_cols['checkin']
+        col_checkout = self.res_cols['checkout']
+        col_nights = self.res_cols['nights']
+        col_value = self.res_cols['reservation_value']
+        col_channel = self.res_cols['channel']
+        col_commission = self.res_cols['channel_commission']
+        col_adults = self.res_cols['adults']
+        col_children_no_tmt = self.res_cols['children_no_tmt']
+        col_children_tmt = self.res_cols['children_tmt']
+
+        blocked_row = pd.DataFrame([{
+            col_reservation_id: 'I-TEST-BLOCK',
+            col_status: 'Indisponivel',
+            col_guest: '',
+            col_property: 'Casa 1',
+            col_checkin: pd.Timestamp('2026-06-27'),
+            col_checkout: pd.Timestamp('2026-06-28'),
+            col_nights: 1,
+            col_value: 0,
+            col_channel: 'Interno',
+            col_commission: 0,
+            col_adults: 0,
+            col_children_no_tmt: 0,
+            col_children_tmt: 0,
+        }])
+
+        reservations_df = pd.concat([self.mock_data['reservations'], blocked_row], ignore_index=True)
+
+        result = self.etl.run_pipeline(
+            guests_df=self.mock_data['guests'],
+            reservations_df=reservations_df
+        )
+
+        self.assertTrue(result['success'])
+
+        log_messages = [entry['message'] for entry in result['log']]
+        blocked_log = [msg for msg in log_messages if 'unavailable reservation blocks' in msg.lower()]
+        self.assertTrue(len(blocked_log) > 0)
+
+        combined_ids = set(self.etl.combined_df[self.res_cols['reservation_id']]) if self.etl.combined_df is not None else set()
+        self.assertNotIn('I-TEST-BLOCK', combined_ids)
     
     def test_booking_commission_applied(self):
         """Test Booking.com commission adjustment."""

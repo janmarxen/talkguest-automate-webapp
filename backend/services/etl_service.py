@@ -7,6 +7,7 @@ Extracted from talkguest_etl.py and adapted for API use.
 
 import pandas as pd
 import numpy as np
+import unicodedata
 from typing import Dict, Any, Optional, Tuple
 
 
@@ -168,6 +169,16 @@ class ETLService:
         self.processing_log.append({'level': level, 'message': message})
         if level == 'error':
             self.errors.append(message)
+
+    @staticmethod
+    def _normalize_text(value: Any) -> str:
+        """Normalize text for comparisons by removing accents and trimming."""
+        if pd.isna(value):
+            return ''
+
+        normalized = unicodedata.normalize('NFKD', str(value))
+        normalized = ''.join(char for char in normalized if not unicodedata.combining(char))
+        return normalized.strip().lower()
     
     def run_pipeline(
         self,
@@ -238,6 +249,12 @@ class ETLService:
         col_adults = self.cols.res('adults')
         col_children_no_tmt = self.cols.res('children_no_tmt')
         col_children_tmt = self.cols.res('children_tmt')
+        col_status = self.cols.res('status')
+        if col_status not in self.reservations_df.columns:
+            for fallback_status in ('Estado', 'Status'):
+                if fallback_status in self.reservations_df.columns:
+                    col_status = fallback_status
+                    break
         col_guest_name = self.cols.guest('name')
         
         # Clean up guest names
@@ -268,6 +285,16 @@ class ETLService:
         self.guests_df = self.guests_df[~mask]
         guests_after = len(self.guests_df)
         self.log(f"Removed {guests_before - guests_after} test entries from guests")
+
+        # Remove non-reservation blocked rows such as unavailable calendar entries
+        reservations_before_status_filter = len(self.reservations_df)
+        unavailable_mask = self.reservations_df[col_status].apply(self._normalize_text).isin({'indisponivel', 'unavailable'})
+        self.reservations_df = self.reservations_df[~unavailable_mask]
+        unavailable_after = len(self.reservations_df)
+        if reservations_before_status_filter - unavailable_after > 0:
+            self.log(
+                f"Removed {reservations_before_status_filter - unavailable_after} unavailable reservation blocks"
+            )
         
         # Remove test and zero-value reservations
         reservations_before = len(self.reservations_df)
