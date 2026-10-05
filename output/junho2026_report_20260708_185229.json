@@ -1,0 +1,764 @@
+{
+  "success": true,
+  "occupancy": {
+    "general_stats": {
+      "total_guests": 34,
+      "total_nights": 146,
+      "total_reservations": 34
+    },
+    "by_property": {
+      "Angra (I, II, III combined)": [
+        {
+          "nationality": "Portugal",
+          "unique_guests": 3,
+          "total_people": 6,
+          "total_nights": 10,
+          "person_nights": 20
+        },
+        {
+          "nationality": "Finl\u00e2ndia",
+          "unique_guests": 2,
+          "total_people": 4,
+          "total_nights": 9,
+          "person_nights": 18
+        },
+        {
+          "nationality": "Alemanha",
+          "unique_guests": 1,
+          "total_people": 2,
+          "total_nights": 3,
+          "person_nights": 6
+        },
+        {
+          "nationality": "Federa\u00e7\u00e3o Russa",
+          "unique_guests": 1,
+          "total_people": 2,
+          "total_nights": 3,
+          "person_nights": 6
+        },
+        {
+          "nationality": "",
+          "unique_guests": "",
+          "total_people": "",
+          "total_nights": "",
+          "person_nights": ""
+        },
+        {
+          "nationality": "TOTAL",
+          "unique_guests": 7,
+          "total_people": 14,
+          "total_nights": 25,
+          "person_nights": 50
+        }
+      ],
+      "Casa 1": [
+        {
+          "nationality": "Espanha",
+          "unique_guests": 1,
+          "total_people": 3,
+          "total_nights": 3,
+          "person_nights": 9
+        },
+        {
+          "nationality": "Portugal",
+          "unique_guests": 1,
+          "total_people": 4,
+          "total_nights": 3,
+          "person_nights": 12
+        },
+        {
+          "nationality": "Reino Unido",
+          "unique_guests": 1,
+          "total_people": 1,
+          "total_nights": 3,
+          "person_nights": 3
+        },
+        {
+          "nationality": "",
+          "unique_guests": "",
+          "total_people": "",
+          "total_nights": "",
+          "person_nights": ""
+        },
+        {
+          "nationality": "TOTAL",
+          "unique_guests": 3,
+          "total_people": 8,
+          "total_nights": 9,
+          "person_nights": 24
+        }
+      ],
+      "Casa 2": [
+        {
+          "nationality": "Fran\u00e7a",
+          "unique_guests": 1,
+          "total_people": 2,
+          "total_nights": 5,
+          "person_nights": 10
+        },
+        {
+          "nationality": "Holanda / Pa\u00edses Baixos",
+          "unique_guests": 1,
+          "total_people": 2,
+          "total_nights": 4,
+          "person_nights": 8
+        },
+        {
+          "nationality": "Estados Unidos",
+          "unique_guests": 1,
+          "total_people": 2,
+          "total_nights": 3,
+          "person_nights": 6
+        },
+        {
+          "nationality": "It\u00e1lia",
+          "unique_guests": 1,
+          "total_people": 2,
+          "total_nights": 3,
+          "person_nights": 6
+        },
+        {
+          "nationality": "",
+          "unique_guests": "",
+          "total_people": "",
+          "total_nights": "",
+          "person_nights": ""
+        },
+        {
+          "nationality": "TOTAL",
+          "unique_guests": 4,
+          "total_people": 8,
+          "total_nights": 15,
+          "person_nights": 30
+        }
+      ],
+      "Casa 3": [
+        {
+          "nationality": "Su\u00ed\u00e7a",
+          "unique_guests": 1,
+          "total_people": 1,
+          "total_nights": 5,
+          "person_nights": 5
+        },
+        {
+          "nationality": "Holanda / Pa\u00edses Baixos",
+          "unique_guests": 1,
+          "total_people": 2,
+          "total_nights": 4,
+          "person_nights": 8
+        },
+        {
+          "nationality": "Portugal",
+          "unique_guests": 1,
+          "total_people": 2,
+          "total_nights": 3,
+          "person_nights": 6
+        },
+        {
+          "nationality": "",
+          "unique_guests": "",
+          "total_people": "",
+          "total_nights": "",
+          "person_nights": ""
+        },
+        {
+          "nationality": "TOTAL",
+          "unique_guests": 3,
+          "total_people": 5,
+          "total_nights": 12,
+          "person_nights": 19
+        }
+      ],
+      "Casa 4": [
+        {
+          "nationality": "Holanda / Pa\u00edses Baixos",
+          "unique_guests": 2,
+          "total_people": 4,
+          "total_nights": 7,
+          "person_nights": 14
+        },
+        {
+          "nationality": "It\u00e1lia",
+          "unique_guests": 1,
+          "total_people": 2,
+          "total_nights": 3,
+          "person_nights": 6
+        },
+        {
+          "nationality": "Espanha",
+          "unique_guests": 1,
+          "total_people": 2,
+          "total_nights": 2,
+          "person_nights": 4
+        },
+        {
+          "nationality": "",
+          "unique_guests": "",
+          "total_people": "",
+          "total_nights": "",
+          "person_nights": ""
+        },
+        {
+          "nationality": "TOTAL",
+          "unique_guests": 4,
+          "total_people": 8,
+          "total_nights": 12,
+          "person_nights": 24
+        }
+      ],
+      "Casa 5": [
+        {
+          "nationality": "Holanda / Pa\u00edses Baixos",
+          "unique_guests": 2,
+          "total_people": 4,
+          "total_nights": 7,
+          "person_nights": 14
+        },
+        {
+          "nationality": "Alemanha",
+          "unique_guests": 1,
+          "total_people": 2,
+          "total_nights": 3,
+          "person_nights": 6
+        },
+        {
+          "nationality": "",
+          "unique_guests": "",
+          "total_people": "",
+          "total_nights": "",
+          "person_nights": ""
+        },
+        {
+          "nationality": "TOTAL",
+          "unique_guests": 3,
+          "total_people": 6,
+          "total_nights": 10,
+          "person_nights": 20
+        }
+      ],
+      "Doze Ribeiras (0, 1 combined)": [
+        {
+          "nationality": "Su\u00ed\u00e7a",
+          "unique_guests": 2,
+          "total_people": 4,
+          "total_nights": 8,
+          "person_nights": 16
+        },
+        {
+          "nationality": "Holanda / Pa\u00edses Baixos",
+          "unique_guests": 1,
+          "total_people": 2,
+          "total_nights": 5,
+          "person_nights": 10
+        },
+        {
+          "nationality": "",
+          "unique_guests": "",
+          "total_people": "",
+          "total_nights": "",
+          "person_nights": ""
+        },
+        {
+          "nationality": "TOTAL",
+          "unique_guests": 3,
+          "total_people": 6,
+          "total_nights": 13,
+          "person_nights": 26
+        }
+      ],
+      "Fuzeta (0, 1 combined)": [
+        {
+          "nationality": "Alemanha",
+          "unique_guests": 2,
+          "total_people": 4,
+          "total_nights": 14,
+          "person_nights": 28
+        },
+        {
+          "nationality": "Fran\u00e7a",
+          "unique_guests": 1,
+          "total_people": 2,
+          "total_nights": 11,
+          "person_nights": 22
+        },
+        {
+          "nationality": "Portugal",
+          "unique_guests": 1,
+          "total_people": 2,
+          "total_nights": 8,
+          "person_nights": 16
+        },
+        {
+          "nationality": "Reino Unido",
+          "unique_guests": 1,
+          "total_people": 2,
+          "total_nights": 7,
+          "person_nights": 14
+        },
+        {
+          "nationality": "Espanha",
+          "unique_guests": 1,
+          "total_people": 2,
+          "total_nights": 5,
+          "person_nights": 10
+        },
+        {
+          "nationality": "Irlanda",
+          "unique_guests": 1,
+          "total_people": 2,
+          "total_nights": 5,
+          "person_nights": 10
+        },
+        {
+          "nationality": "",
+          "unique_guests": "",
+          "total_people": "",
+          "total_nights": "",
+          "person_nights": ""
+        },
+        {
+          "nationality": "TOTAL",
+          "unique_guests": 7,
+          "total_people": 14,
+          "total_nights": 50,
+          "person_nights": 100
+        }
+      ]
+    }
+  },
+  "revenue": {
+    "reservations_summary": {
+      "total_gross_value": 15086.96,
+      "total_commissions": 2083.55,
+      "total_iva": 688.04,
+      "total_net_value": 12315.37,
+      "total_reservations": 34
+    },
+    "reservations_by_property": [
+      {
+        "property": "Angra I",
+        "gross_value": 887.0,
+        "commission": 145.47,
+        "iva_amount": 35.48,
+        "net_value": 706.05,
+        "reservation_count": 1
+      },
+      {
+        "property": "Angra II",
+        "gross_value": 988.0,
+        "commission": 158.72,
+        "iva_amount": 39.52,
+        "net_value": 789.76,
+        "reservation_count": 3
+      },
+      {
+        "property": "Angra III",
+        "gross_value": 1054.0,
+        "commission": 169.13,
+        "iva_amount": 42.16,
+        "net_value": 842.71,
+        "reservation_count": 3
+      },
+      {
+        "property": "Casa 1",
+        "gross_value": 1083.96,
+        "commission": 106.92,
+        "iva_amount": 43.36,
+        "net_value": 933.68,
+        "reservation_count": 3
+      },
+      {
+        "property": "Casa 2",
+        "gross_value": 1255.0,
+        "commission": 203.71,
+        "iva_amount": 50.2,
+        "net_value": 1001.09,
+        "reservation_count": 4
+      },
+      {
+        "property": "Casa 3",
+        "gross_value": 1385.0,
+        "commission": 134.13,
+        "iva_amount": 55.4,
+        "net_value": 1195.47,
+        "reservation_count": 3
+      },
+      {
+        "property": "Casa 4",
+        "gross_value": 1427.0,
+        "commission": 153.02,
+        "iva_amount": 57.08,
+        "net_value": 1216.9,
+        "reservation_count": 4
+      },
+      {
+        "property": "Casa 5",
+        "gross_value": 1098.0,
+        "commission": 88.94,
+        "iva_amount": 43.92,
+        "net_value": 965.14,
+        "reservation_count": 3
+      },
+      {
+        "property": "Doze Ribeiras 0",
+        "gross_value": 488.0,
+        "commission": 80.03,
+        "iva_amount": 19.52,
+        "net_value": 388.45,
+        "reservation_count": 1
+      },
+      {
+        "property": "Doze Ribeiras 1",
+        "gross_value": 1193.0,
+        "commission": 184.92,
+        "iva_amount": 47.72,
+        "net_value": 960.36,
+        "reservation_count": 2
+      },
+      {
+        "property": "Fuzeta 0",
+        "gross_value": 1508.0,
+        "commission": 236.95,
+        "iva_amount": 90.48,
+        "net_value": 1180.57,
+        "reservation_count": 3
+      },
+      {
+        "property": "Fuzeta 1",
+        "gross_value": 2720.0,
+        "commission": 421.61,
+        "iva_amount": 163.2,
+        "net_value": 2135.19,
+        "reservation_count": 4
+      }
+    ],
+    "invoices_summary": null,
+    "invoices_by_property": null,
+    "detailed_calculations": [
+      {
+        "property": "Casa 4",
+        "gross_value": 217.0,
+        "commission": 35.59,
+        "iva_rate": 0.04,
+        "iva_amount": 8.68,
+        "net_value": 172.73
+      },
+      {
+        "property": "Fuzeta 1",
+        "gross_value": 417.0,
+        "commission": 64.64,
+        "iva_rate": 0.06,
+        "iva_amount": 25.02,
+        "net_value": 327.34000000000003
+      },
+      {
+        "property": "Casa 2",
+        "gross_value": 387.0,
+        "commission": 63.47,
+        "iva_rate": 0.04,
+        "iva_amount": 15.48,
+        "net_value": 308.04999999999995
+      },
+      {
+        "property": "Doze Ribeiras 0",
+        "gross_value": 488.0,
+        "commission": 80.03,
+        "iva_rate": 0.04,
+        "iva_amount": 19.52,
+        "net_value": 388.45000000000005
+      },
+      {
+        "property": "Casa 3",
+        "gross_value": 495.0,
+        "commission": 76.73,
+        "iva_rate": 0.04,
+        "iva_amount": 19.8,
+        "net_value": 398.46999999999997
+      },
+      {
+        "property": "Doze Ribeiras 1",
+        "gross_value": 485.0,
+        "commission": 75.18,
+        "iva_rate": 0.04,
+        "iva_amount": 19.400000000000002,
+        "net_value": 390.42
+      },
+      {
+        "property": "Casa 5",
+        "gross_value": 286.0,
+        "commission": 44.33,
+        "iva_rate": 0.04,
+        "iva_amount": 11.44,
+        "net_value": 230.23000000000002
+      },
+      {
+        "property": "Angra II",
+        "gross_value": 369.0,
+        "commission": 57.2,
+        "iva_rate": 0.04,
+        "iva_amount": 14.76,
+        "net_value": 297.04
+      },
+      {
+        "property": "Angra III",
+        "gross_value": 414.0,
+        "commission": 64.17,
+        "iva_rate": 0.04,
+        "iva_amount": 16.56,
+        "net_value": 333.27
+      },
+      {
+        "property": "Casa 3",
+        "gross_value": 540.0,
+        "commission": 0.0,
+        "iva_rate": 0.04,
+        "iva_amount": 21.6,
+        "net_value": 518.4
+      },
+      {
+        "property": "Angra I",
+        "gross_value": 887.0,
+        "commission": 145.47,
+        "iva_rate": 0.04,
+        "iva_amount": 35.480000000000004,
+        "net_value": 706.05
+      },
+      {
+        "property": "Fuzeta 0",
+        "gross_value": 356.0,
+        "commission": 58.38,
+        "iva_rate": 0.06,
+        "iva_amount": 21.36,
+        "net_value": 276.26
+      },
+      {
+        "property": "Angra II",
+        "gross_value": 307.0,
+        "commission": 50.35,
+        "iva_rate": 0.04,
+        "iva_amount": 12.280000000000001,
+        "net_value": 244.36999999999998
+      },
+      {
+        "property": "Casa 4",
+        "gross_value": 494.0,
+        "commission": 0.0,
+        "iva_rate": 0.04,
+        "iva_amount": 19.76,
+        "net_value": 474.24
+      },
+      {
+        "property": "Angra III",
+        "gross_value": 392.0,
+        "commission": 64.29,
+        "iva_rate": 0.04,
+        "iva_amount": 15.68,
+        "net_value": 312.03
+      },
+      {
+        "property": "Fuzeta 1",
+        "gross_value": 1002.0,
+        "commission": 155.31,
+        "iva_rate": 0.06,
+        "iva_amount": 60.12,
+        "net_value": 786.57
+      },
+      {
+        "property": "Casa 2",
+        "gross_value": 445.0,
+        "commission": 72.98,
+        "iva_rate": 0.04,
+        "iva_amount": 17.8,
+        "net_value": 354.21999999999997
+      },
+      {
+        "property": "Casa 1",
+        "gross_value": 393.0,
+        "commission": 64.45,
+        "iva_rate": 0.04,
+        "iva_amount": 15.72,
+        "net_value": 312.83
+      },
+      {
+        "property": "Casa 4",
+        "gross_value": 332.0,
+        "commission": 54.45,
+        "iva_rate": 0.04,
+        "iva_amount": 13.280000000000001,
+        "net_value": 264.27
+      },
+      {
+        "property": "Casa 2",
+        "gross_value": 188.0,
+        "commission": 30.83,
+        "iva_rate": 0.04,
+        "iva_amount": 7.5200000000000005,
+        "net_value": 149.65
+      },
+      {
+        "property": "Casa 1",
+        "gross_value": 416.96,
+        "commission": 0.0,
+        "iva_rate": 0.04,
+        "iva_amount": 16.6784,
+        "net_value": 400.28159999999997
+      },
+      {
+        "property": "Casa 3",
+        "gross_value": 350.0,
+        "commission": 57.4,
+        "iva_rate": 0.04,
+        "iva_amount": 14.0,
+        "net_value": 278.6
+      },
+      {
+        "property": "Fuzeta 1",
+        "gross_value": 693.0,
+        "commission": 107.42,
+        "iva_rate": 0.06,
+        "iva_amount": 41.58,
+        "net_value": 544.0
+      },
+      {
+        "property": "Angra II",
+        "gross_value": 312.0,
+        "commission": 51.17,
+        "iva_rate": 0.04,
+        "iva_amount": 12.48,
+        "net_value": 248.35
+      },
+      {
+        "property": "Casa 5",
+        "gross_value": 540.0,
+        "commission": 0.0,
+        "iva_rate": 0.04,
+        "iva_amount": 21.6,
+        "net_value": 518.4
+      },
+      {
+        "property": "Fuzeta 0",
+        "gross_value": 785.0,
+        "commission": 121.68,
+        "iva_rate": 0.06,
+        "iva_amount": 47.1,
+        "net_value": 616.2199999999999
+      },
+      {
+        "property": "Angra III",
+        "gross_value": 248.0,
+        "commission": 40.67,
+        "iva_rate": 0.04,
+        "iva_amount": 9.92,
+        "net_value": 197.41
+      },
+      {
+        "property": "Doze Ribeiras 1",
+        "gross_value": 708.0,
+        "commission": 109.74,
+        "iva_rate": 0.04,
+        "iva_amount": 28.32,
+        "net_value": 569.9399999999999
+      },
+      {
+        "property": "Fuzeta 0",
+        "gross_value": 367.0,
+        "commission": 56.89,
+        "iva_rate": 0.06,
+        "iva_amount": 22.02,
+        "net_value": 288.09000000000003
+      },
+      {
+        "property": "Casa 2",
+        "gross_value": 235.0,
+        "commission": 36.43,
+        "iva_rate": 0.04,
+        "iva_amount": 9.4,
+        "net_value": 189.17
+      },
+      {
+        "property": "Casa 4",
+        "gross_value": 384.0,
+        "commission": 62.98,
+        "iva_rate": 0.04,
+        "iva_amount": 15.36,
+        "net_value": 305.65999999999997
+      },
+      {
+        "property": "Fuzeta 1",
+        "gross_value": 608.0,
+        "commission": 94.24,
+        "iva_rate": 0.06,
+        "iva_amount": 36.48,
+        "net_value": 477.28
+      },
+      {
+        "property": "Casa 1",
+        "gross_value": 274.0,
+        "commission": 42.47,
+        "iva_rate": 0.04,
+        "iva_amount": 10.96,
+        "net_value": 220.57
+      },
+      {
+        "property": "Casa 5",
+        "gross_value": 272.0,
+        "commission": 44.61,
+        "iva_rate": 0.04,
+        "iva_amount": 10.88,
+        "net_value": 216.51
+      }
+    ]
+  },
+  "log": [
+    {
+      "level": "info",
+      "message": "Detected reservation file language: PT"
+    },
+    {
+      "level": "info",
+      "message": "Applied Booking.com commission: 16 reservations, +\u20ac83.41"
+    },
+    {
+      "level": "info",
+      "message": "Removed 82 test entries from guests"
+    },
+    {
+      "level": "info",
+      "message": "Removed 1 unavailable reservation blocks"
+    },
+    {
+      "level": "info",
+      "message": "Removed 1 invalid reservations"
+    },
+    {
+      "level": "info",
+      "message": "Removed 1 duplicates"
+    },
+    {
+      "level": "info",
+      "message": "No invoice data provided - using reservation values only"
+    },
+    {
+      "level": "info",
+      "message": "Final dataset: 34 unique records"
+    },
+    {
+      "level": "info",
+      "message": "Occupancy report generated"
+    },
+    {
+      "level": "info",
+      "message": "Revenue report generated"
+    },
+    {
+      "level": "info",
+      "message": "Pipeline completed successfully"
+    }
+  ],
+  "summary": {
+    "guests_processed": 2157,
+    "reservations_processed": 34,
+    "invoices_processed": 0,
+    "properties_found": 8
+  }
+}

@@ -5,8 +5,20 @@ Provides access to processed data results.
 """
 
 from flask import Blueprint, jsonify, current_app
+import numpy as np
 
 results_bp = Blueprint('results', __name__)
+
+
+def _json_safe(value):
+    """Convert NumPy scalar values in ETL results to JSON-native values."""
+    if isinstance(value, np.generic):
+        return value.item()
+    if isinstance(value, dict):
+        return {key: _json_safe(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_json_safe(item) for item in value]
+    return value
 
 
 @results_bp.route('/results', methods=['GET'])
@@ -22,7 +34,7 @@ def get_all_results():
     
     return jsonify({
         'success': True,
-        'data': storage['results']
+        'data': _json_safe(storage['results'])
     }), 200
 
 
@@ -46,7 +58,7 @@ def get_occupancy_results():
     
     return jsonify({
         'success': True,
-        'data': occupancy
+        'data': _json_safe(occupancy)
     }), 200
 
 
@@ -70,7 +82,7 @@ def get_revenue_results():
     
     return jsonify({
         'success': True,
-        'data': revenue
+        'data': _json_safe(revenue)
     }), 200
 
 
@@ -89,5 +101,5 @@ def get_summary():
     
     return jsonify({
         'success': True,
-        'data': summary
+        'data': _json_safe(summary)
     }), 200
