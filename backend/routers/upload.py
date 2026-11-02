@@ -7,6 +7,7 @@ Handles file uploads for guests, reservations, and invoices data.
 from flask import Blueprint, request, jsonify, current_app
 import pandas as pd
 import io
+import json
 
 upload_bp = Blueprint('upload', __name__)
 
@@ -144,8 +145,9 @@ def upload_file(file_type):
         if 'errors' in storage:
             del storage['errors']
         
-        # Convert preview to JSON-safe format (replace NaN with None)
-        preview_df = df.head(5).fillna('')  # Replace NaN with empty string for preview
+        # Round-trip through pandas' JSON encoder to normalize NaT, NaN, dates,
+        # and NumPy scalar values before Flask serializes the response.
+        preview = json.loads(df.head(5).to_json(orient='records', date_format='iso'))
         
         return jsonify({
             'success': True,
@@ -153,7 +155,7 @@ def upload_file(file_type):
             'filename': file.filename,
             'columns': df.columns.tolist(),
             'row_count': len(df),
-            'preview': preview_df.to_dict(orient='records')
+            'preview': preview
         }), 200
         
     except Exception as e:

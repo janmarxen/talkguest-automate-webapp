@@ -11,6 +11,7 @@ import io
 import sys
 import os
 import numpy as np
+import pandas as pd
 
 # Add parent directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
@@ -90,6 +91,23 @@ class TestUploadEndpoints(TestAPIBase):
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.data)
         self.assertTrue(data['success'])
+
+    def test_upload_reservations_with_blank_date_in_preview(self):
+        """Test that blank Excel dates are returned as JSON null in the preview."""
+        reservations = self.mock_data['reservations'].copy()
+        reservations.loc[reservations.index[0], 'Checkin'] = pd.NaT
+        excel_file = self._create_excel_file(reservations)
+
+        response = self.client.post(
+            '/api/upload/reservations',
+            data={'file': (excel_file, 'reservations.xlsx')},
+            content_type='multipart/form-data'
+        )
+
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.data)
+        self.assertTrue(data['success'])
+        self.assertIsNone(data['preview'][0]['Checkin'])
     
     def test_upload_invalid_file_type(self):
         """Test uploading invalid file type."""
